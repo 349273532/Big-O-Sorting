@@ -2,7 +2,7 @@
 import java.util.Scanner;
 import java.util.Random;
 
-public class file {
+public class BigOSorting {
     public static void main (String[] args) {
         Random ran = new Random();
       
