@@ -34,18 +34,46 @@ public class BigOSorting {
             int[]arr3 = createDataset(40000);
             int[]arr4 = createDataset(80000);
             int[]arr5 = createDataset(160000);
+            
+
+            
+
             if (choice.equals("selection")) { 
+                
+                long beginTime = System.currentTimeMillis();
                 selectionSort(10000,arr1);
+                long endTime = System.currentTimeMillis();
+                long difference = endTime - beginTime;
+
+                long beginTime2 = System.currentTimeMillis();
                 selectionSort(20000,arr2);
+                long endTime2 = System.currentTimeMillis();
+                long difference2 = endTime2 - beginTime2;
+
+                long beginTime3 = System.currentTimeMillis();
                 selectionSort(40000,arr3);
+                long endTime3 = System.currentTimeMillis();
+                long difference3 = endTime3 - beginTime3;
+
+                long beginTime4 = System.currentTimeMillis();
                 selectionSort(80000,arr4);
+                long endTime4 = System.currentTimeMillis();
+                long difference4 = endTime4 - beginTime4;
+
+                long beginTime5 = System.currentTimeMillis();
                 selectionSort(160000,arr5);
+                long endTime5 = System.currentTimeMillis();
+                long difference5 = endTime5 - beginTime5;
 
             } else if (choice.equals("insertation")) {
                 // insertation call
             } else if (choice.equals("merge")) {
                 // merge call
+            } else {
+                System.out.println("Invalid");
             }
+
+
         }
         
 
