@@ -19,7 +19,7 @@ public class BigOSorting {
             if (choice.equals("selection")) { // make this a method
                 selectionSort(size,data);
             } else if (choice.equals("insertion")) {
-                insertionSort(data);
+                insertionSort(size,data);
             } else if (choice.equals("merge")) {
                 // merge call
             }
@@ -27,70 +27,35 @@ public class BigOSorting {
             System.out.println("Min: " + data[0]);
 
         } else {
-            int[]arr1 = createDataset(10000);
-            int[]arr2 = createDataset(20000);
-            int[]arr3 = createDataset(40000);
-            int[]arr4 = createDataset(80000);
-            int[]arr5 = createDataset(160000);
-
+            int[]arr1;
             long beginTime;
             long endTime;
 
-            
+            int[] sizes = {10000,20000,40000,80000,160000};
 
 
             if (choice.equals("selection")) {
 
-                beginTime = System.currentTimeMillis();
-                selectionSort(10000,arr1);
-                endTime = System.currentTimeMillis();
-                long difference = endTime - beginTime;
-
-                beginTime = System.currentTimeMillis();
-                selectionSort(20000,arr2);
-                endTime = System.currentTimeMillis();
-                long difference2 = endTime - beginTime;
-
-                beginTime = System.currentTimeMillis();
-                selectionSort(40000,arr3);
-                endTime = System.currentTimeMillis();
-                long difference3 = endTime - beginTime;
-
-                beginTime = System.currentTimeMillis();
-                selectionSort(80000,arr4);
-                endTime = System.currentTimeMillis();
-                long difference4 = endTime - beginTime;
-
-                beginTime = System.currentTimeMillis();
-                selectionSort(160000,arr5);
-                endTime = System.currentTimeMillis();
-                long difference5 = endTime - beginTime;
+                for (int i = 0; i < 5; i++) {
+                   
+                    beginTime = System.currentTimeMillis();
+                    selectionSort(sizes[i],createDataset(sizes[i]));
+                    endTime = System.currentTimeMillis();
+                    long difference = endTime - beginTime;
+                    System.out.println("size:" + sizes[i] + "difference:" + difference);
+                }
+                  
 
             } else if (choice.equals("insertion")) {
-                beginTime = System.currentTimeMillis();
-                insertionSort(arr1);
-                endTime = System.currentTimeMillis();
-                long difference = endTime - beginTime;
-
-                beginTime = System.currentTimeMillis();
-                insertionSort(arr2);
-                endTime = System.currentTimeMillis();
-                long difference2 = endTime - beginTime;
-
-                beginTime = System.currentTimeMillis();
-                insertionSort(arr3);
-                endTime = System.currentTimeMillis();
-                long difference3 = endTime - beginTime;
-
-                beginTime = System.currentTimeMillis();
-                insertionSort(arr4);
-                endTime = System.currentTimeMillis();
-                long difference4 = endTime - beginTime;
-
-                beginTime = System.currentTimeMillis();
-                insertionSort(arr5);
-                endTime = System.currentTimeMillis();
-                long difference5 = endTime - beginTime;
+                
+                for (int i = 0; i < 5; i++) {
+                  
+                    beginTime = System.currentTimeMillis();
+                    insertionSort(sizes[i],createDataset(sizes[i]));
+                    endTime = System.currentTimeMillis();
+                    long difference = endTime - beginTime;
+                    System.out.println("size:" + sizes[i] + "difference:" + difference);
+                }
 
             } else if (choice.equals("merge")) {
                 // merge call
@@ -105,7 +70,7 @@ public class BigOSorting {
     }
 
     public static void selectionSort(int size, int[] arr){
-        for (int i = 0; i < size-1; i++)  {
+        for (int i = 0; i < size; i++)  {
             int index = i;
             for (int j = i + 1; j < size; j++){
                 if (arr[j] < arr[index]){
@@ -118,11 +83,11 @@ public class BigOSorting {
         }
     }
 
-    public static void insertionSort(int[] arr){
+    public static void insertionSort(int size, int[] arr){
         int key;
         int j;
 
-        for (int i = 1; i < arr.length; ++i) {
+        for (int i = 1; i < size; ++i) {
             key = arr[i];
             j = i - 1;
 
@@ -145,8 +110,5 @@ public class BigOSorting {
         return data;
     }
 
-    public static void chooseSort () {
-
-    }
+    
 }
-
