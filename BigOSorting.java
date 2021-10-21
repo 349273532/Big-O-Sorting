@@ -1,13 +1,13 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.Random;
 
-
 public class BigOSorting {
     public static void main (String[] args) {
-        
+
         Scanner input = new Scanner(System.in);
-        long beginTime, endTime;
-        long difference = 0;
+
         System.out.println("Selection, insertion or merge sort?");
         String choice = input.nextLine();
         choice = choice.toLowerCase();
@@ -15,74 +15,62 @@ public class BigOSorting {
         System.out.println("How much do you want to sort? (-1 for all sizes)");
         int size = input.nextInt();
 
-        if (size != -1) { // when user chooses their own size
+        if (size != -1) {
             int[] data = createDataset(size);
 
-            if (choice.equals("selection")) { 
-                beginTime = System.currentTimeMillis();
-                selectionSort(size, data);
-                endTime = System.currentTimeMillis();
-                difference = endTime - beginTime;
+            if (choice.equals("selection")) { // make this a method
+                selectionSort(size,data);
             } else if (choice.equals("insertion")) {
-                beginTime = System.currentTimeMillis();
-                insertionSort(size, data);
-                endTime = System.currentTimeMillis();
-                difference = endTime - beginTime;
+                insertionSort(size,data);
             } else if (choice.equals("merge")) {
-                beginTime = System.currentTimeMillis();
-                sort(data,0,(size-1));
-                endTime = System.currentTimeMillis();
-                difference = endTime - beginTime;
+                // merge call
             }
-
-            System.out.println("Largest value: " + data[size-1]);
-            System.out.println("Smallest value: " + data[0]);
-            System.out.println("Sorting time: "+ difference);
-
-          
+            System.out.println("Max: " + data[size-1]);
+            System.out.println("Min: " + data[0]);
 
         } else {
-        
+            String[] arr = new String[5];
+            long beginTime;
+            long endTime;
+
             int[] sizes = {10000,20000,40000,80000,160000};
 
             if (choice.equals("selection")) {
 
                 for (int i = 0; i < 5; i++) {
-                    int arr[] = createDataset(sizes[i]);
+
                     beginTime = System.currentTimeMillis();
-                    selectionSort(sizes[i],arr);
+                    selectionSort(sizes[i],createDataset(sizes[i]));
                     endTime = System.currentTimeMillis();
-                    difference = endTime - beginTime;
-                    System.out.println("size:" + sizes[i] + "difference:" + difference);
+                    long difference = endTime - beginTime;
+                    arr[i] = sizes[i] + ", " + difference;
                 }
-                  
+
+
             } else if (choice.equals("insertion")) {
-                
+
                 for (int i = 0; i < 5; i++) {
-                    int arr[] = createDataset(sizes[i]);
+
                     beginTime = System.currentTimeMillis();
-                    insertionSort(sizes[i],arr);
+                    insertionSort(sizes[i],createDataset(sizes[i]));
                     endTime = System.currentTimeMillis();
-                    difference = endTime - beginTime;
-                    System.out.println("size:" + sizes[i] + "difference:" + difference);
+                    long difference = endTime - beginTime;
+                    arr[i] = sizes[i] + ", " + difference;
                 }
 
             } else if (choice.equals("merge")) {
-                
                 for (int i = 0; i < 5; i++) {
-                    int arr[] = createDataset(sizes[i]);
+                    int mergeArr[] = createDataset(sizes[i]);
                     beginTime = System.currentTimeMillis();
-                    sort(arr,0,(sizes[i]-1));
+                    sort(mergeArr,0,(sizes[i]-1));
                     endTime = System.currentTimeMillis();
-                    difference = endTime - beginTime;
-                    System.out.println("size:" + sizes[i] + "difference:" + difference);
+                    long difference = endTime - beginTime;
                 }
-    
             } else {
                 System.out.println("Invalid");
             }
 
-
+            writeToFile(arr);
         }
 
 
@@ -122,27 +110,27 @@ public class BigOSorting {
     // Merges two subarrays of arr[].
     // First subarray is arr[l..m]
     // Second subarray is arr[m+1..r]
-    public static void merge(int arr[], int l, int m, int r)
+    static void merge(int arr[], int l, int m, int r)
     {
         // Find sizes of two subarrays to be merged
         int n1 = m - l + 1;
         int n2 = r - m;
-  
+
         /* Create temp arrays */
         int L[] = new int[n1];
         int R[] = new int[n2];
-  
+
         /*Copy data to temp arrays*/
         for (int i = 0; i < n1; ++i)
             L[i] = arr[l + i];
         for (int j = 0; j < n2; ++j)
             R[j] = arr[m + 1 + j];
-  
+
         /* Merge the temp arrays */
-  
+
         // Initial indexes of first and second subarrays
         int i = 0, j = 0;
-  
+
         // Initial index of merged subarray array
         int k = l;
         while (i < n1 && j < n2) {
@@ -156,14 +144,14 @@ public class BigOSorting {
             }
             k++;
         }
-  
+
         /* Copy remaining elements of L[] if any */
         while (i < n1) {
             arr[k] = L[i];
             i++;
             k++;
         }
-  
+
         /* Copy remaining elements of R[] if any */
         while (j < n2) {
             arr[k] = R[j];
@@ -173,18 +161,18 @@ public class BigOSorting {
     }
     // Main function that sorts arr[l..r] using
     // merge()
-    public static void sort(int arr[], int l, int r)
+    static void sort(int arr[], int l, int r)
     {
         if (l < r) {
             // Find the middle point
             int m =l+ (r-l)/2;
-  
+
             // Sort first and second halves
             sort(arr, l, m);
             sort(arr, m + 1, r);
-  
+
             // Merge the sorted halves
-           merge(arr, l, m, r);
+            merge(arr, l, m, r);
         }
     }
 
@@ -198,5 +186,17 @@ public class BigOSorting {
         return data;
     }
 
-    
+    public static void writeToFile(String[] arr){
+        try {
+            FileWriter file = new FileWriter("results.csv");
+            for (int i = 0; i < 5; i++) {
+                file.append(arr[i]);
+                file.append("\n");
+            }
+            file.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
