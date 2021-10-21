@@ -1,11 +1,13 @@
 import java.util.Scanner;
 import java.util.Random;
 
+
 public class BigOSorting {
     public static void main (String[] args) {
-
+        
         Scanner input = new Scanner(System.in);
-        long beginTime, endTime, difference;
+        long beginTime, endTime;
+        long difference = 0;
         System.out.println("Selection, insertion or merge sort?");
         String choice = input.nextLine();
         choice = choice.toLowerCase();
@@ -13,25 +15,31 @@ public class BigOSorting {
         System.out.println("How much do you want to sort? (-1 for all sizes)");
         int size = input.nextInt();
 
-        if (size != -1) {
+        if (size != -1) { // when user chooses their own size
             int[] data = createDataset(size);
 
-            if (choice.equals("selection")) { // make this a method
-                selectionSort(size,data);
-            } else if (choice.equals("insertion")) {
-                insertionSort(size,data);
-            } else if (choice.equals("merge")) {
-
+            if (choice.equals("selection")) { 
                 beginTime = System.currentTimeMillis();
-                    sort(data,0,(size-1));
-                    endTime = System.currentTimeMillis();
-                    difference = endTime - beginTime;
-                System.out.println(difference + "<-time");
-
-            
+                selectionSort(size, data);
+                endTime = System.currentTimeMillis();
+                difference = endTime - beginTime;
+            } else if (choice.equals("insertion")) {
+                beginTime = System.currentTimeMillis();
+                insertionSort(size, data);
+                endTime = System.currentTimeMillis();
+                difference = endTime - beginTime;
+            } else if (choice.equals("merge")) {
+                beginTime = System.currentTimeMillis();
+                sort(data,0,(size-1));
+                endTime = System.currentTimeMillis();
+                difference = endTime - beginTime;
             }
-            System.out.println("Max: " + data[size-1]);
-            System.out.println("Min: " + data[0]);
+
+            System.out.println("Largest value: " + data[size-1]);
+            System.out.println("Smallest value: " + data[0]);
+            System.out.println("Sorting time: "+ difference);
+
+          
 
         } else {
         
@@ -48,7 +56,6 @@ public class BigOSorting {
                     System.out.println("size:" + sizes[i] + "difference:" + difference);
                 }
                   
-
             } else if (choice.equals("insertion")) {
                 
                 for (int i = 0; i < 5; i++) {
@@ -70,8 +77,7 @@ public class BigOSorting {
                     difference = endTime - beginTime;
                     System.out.println("size:" + sizes[i] + "difference:" + difference);
                 }
-               
-
+    
             } else {
                 System.out.println("Invalid");
             }
