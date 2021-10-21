@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.Random;
 
-public class BigOSorting {
+public class SortDriver {
     public static void main (String[] args) {
 
         Scanner input = new Scanner(System.in);
