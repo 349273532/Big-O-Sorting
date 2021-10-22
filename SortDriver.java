@@ -26,25 +26,14 @@ public class SortDriver {
     }
     
     // validate when invald sort choice
-     System.out.println("How much do you want to sort? (-1 for all sizes)");
-    int size = 0;
-    boolean invalid = true;
-        while (invalid) {
-            if (input.hasNextInt()) { 
-                size = input.nextInt(); // arrays start at 0, but humans start counting at 1 so compensate
-                if (size < -1) {
-                    System.out.println("\nPlease enter a number that is -1, or above 0:");
-                    continue;
-                } 
-                
-            }  
-            else { // when the input is not an integer
-                System.out.println("\nPlease enter a that is -1, or above 0:");  
-                input.next();
-                continue;
-            }
-            invalid = false; // when all of the conditions are false there will be no continue and we will reach here 
-        }
+    while(intChoosing){
+      System.out.println("How much do you want to sort? (-1 for all sizes)");
+      int size = input.nextInt();
+      if (size >= -1){
+        intChoosing = false;
+      } else {
+        System.out.println("Please Enter a Number -1, or Above 0");
+      }
       
       if (size > 0) {// If the size is custom
         int[] data = createDataset(size);
@@ -70,11 +59,11 @@ public class SortDriver {
         System.out.println("Min: " + data[0]);
         System.out.println("Sorting time: " + difference + "ms");
         
-      } else if (size == -1) {//If the size is -1 it will do the preset elements
+      } else if(size == -1) {//If the size is -1 it will do the preset elements
         String[] arr = new String[5];
         
         int[] sizes = {10000,20000,40000,80000,160000};
-        //choosing the method for the preset
+        //choosign the method for the preset
         if (choice.equals("selection")) {
           
           for (int i = 0; i < 5; i++) {
@@ -112,6 +101,7 @@ public class SortDriver {
         writeToFile(arr);
         System.out.println("results.csv file updated");
       }
+    }
     input.close();
   }
   
@@ -152,6 +142,15 @@ public class SortDriver {
   // Merges two subarrays of arr[].
   // First subarray is arr[l..m]
   // Second subarray is arr[m+1..r]
+  
+  /**
+   * This is merging part of the sorting method 
+   * it will then procced to mergeing them back together
+   * @para arr is that will be formated 
+   * @para l this is the left side of the array
+   * @para m this is to check the middle of the array 
+   * @para r this is the right side of the array
+   */
   static void merge(int arr[], int l, int m, int r)
   {
     // Find sizes of two subarrays to be merged
@@ -203,6 +202,13 @@ public class SortDriver {
   }
   // Main function that sorts arr[l..r] using
   // merge()
+  /**
+   * This is the sort method that will take all the parts of the spit up array and call upon the combine method
+   * it will then procced to mergeing them back together
+   * @para arr is that will be formated 
+   * @para l this is the left side of the array
+   * @para r this is the right side of the array
+   */
   static void sort(int arr[], int l, int r)
   {
     if (l < r) {
@@ -227,16 +233,19 @@ public class SortDriver {
     }
     return data;
   }
-  
+  /**
+   * This method will print the array of the output to the file two values for each row sepreated by a comma
+   * @para arr is the arr that we will print to the file
+   */
   public static void writeToFile(String[] arr){
     try {
       FileWriter file = new FileWriter("results.csv");
       for (int i = 0; i < 5; i++) {
-        file.append(arr[i]);
+        file.append(arr[i]);//Prints out the row and then create another row
         file.append("\n");
       }
       file.close();
-    } catch (IOException e) {
+    } catch (IOException e) {//if there is an error catch it
       e.printStackTrace();
     }
   }
