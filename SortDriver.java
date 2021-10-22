@@ -19,7 +19,7 @@ public class SortDriver {
       choice = choice.toLowerCase();
       if(choice.equals("selection") || choice.equals("insertion")|| choice.equals("merge")){     
         choosing = false;  
-      } else ssssffdsdssf{
+      } else {
         System.out.println("Incorrect Word \n Please Choose again:");
       }
     }
@@ -60,8 +60,6 @@ public class SortDriver {
         
       } else if(size == -1) {
         String[] arr = new String[5];
-        
-        
         
         int[] sizes = {10000,20000,40000,80000,160000};
         
