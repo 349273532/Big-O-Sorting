@@ -123,11 +123,17 @@ public class SortDriver {
             arr[min] = swap;
         }
     }
-  
+  /**
+     * Sorting algorithm that sorts each element one at a time. For each element, insertionSort looks at the sorted array of elements
+     * in the indices before it and determines the element's correct location among the array of sorted elements
+     * @param size - size of the array to be sorted 
+     * @param arr - array to be sorted
+     */
   public static void insertionSort(int size, int[] arr){
     int key;
     int j;
     
+    //Loop through each element of the array
     for (int i = 1; i < size; ++i) {
       key = arr[i];
       j = i - 1;
@@ -137,6 +143,7 @@ public class SortDriver {
         arr[j + 1] = arr[j];
         j = j - 1;
       }
+      // Inserts element in correct position of the sorted part of the array
       arr[j + 1] = key;
     }
   }
