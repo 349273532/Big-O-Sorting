@@ -36,6 +36,7 @@ public class SortDriver {
       }
       
       if (size > 0) {// If the size is custom
+        System.out.println("Data size: " + size);
         int[] data = createDataset(size);
         //Measures the time before the method started until it ends exceution and finds the difference
         if (choice.equals("selection")) { // The selection method
