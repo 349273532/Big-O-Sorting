@@ -7,13 +7,22 @@ public class SortDriver {
     public static void main (String[] args) {
         long beginTime, endTime;
         long difference = 0;
-            
+        boolean choosing = true;
+        String choice = "";
         Scanner input = new Scanner(System.in);
 
-        System.out.println("Selection, insertion or merge sort?");
-        String choice = input.nextLine();
-        choice = choice.toLowerCase();
-        System.out.println(choice);
+        while(choosing){
+            System.out.println("Selection, insertion or merge sort?");
+            choice = input.nextLine();
+            choice = choice.toLowerCase();
+            if(choice.equals("selection") || choice.equals("insertion")|| choice.equals("merge")){     
+                choosing = false;  
+            }
+            else{
+                System.out.println("Incorrect Word \n Please Choose again:");
+            }
+        }
+        
         // validate when invald sort choice
 
         System.out.println("How much do you want to sort? (-1 for all sizes)");
@@ -87,8 +96,9 @@ public class SortDriver {
             }
 
             writeToFile(arr);
+            System.out.println("results.csv file updated");
         }
-
+        input.close();
 
     }
 
