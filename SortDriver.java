@@ -223,7 +223,7 @@ public class SortDriver {
       merge(arr, l, m, r);
     }
   }
-  
+  //creates the data set randomly using the size of the array and randomly generating postive int
   public static int[] createDataset(int size) {
     Random ran = new Random();
     int[] data = new int[size];
