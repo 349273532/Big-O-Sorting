@@ -5,12 +5,16 @@ import java.util.Random;
 
 public class SortDriver {
     public static void main (String[] args) {
-
+        long beginTime, endTime;
+        long difference = 0;
+            
         Scanner input = new Scanner(System.in);
 
         System.out.println("Selection, insertion or merge sort?");
         String choice = input.nextLine();
         choice = choice.toLowerCase();
+        System.out.println(choice);
+        // validate when invald sort choice
 
         System.out.println("How much do you want to sort? (-1 for all sizes)");
         int size = input.nextInt();
@@ -18,20 +22,30 @@ public class SortDriver {
         if (size != -1) {
             int[] data = createDataset(size);
 
-            if (choice.equals("selection")) { // make this a method
+            if (choice.equals("selection")) { 
+                beginTime = System.currentTimeMillis();
                 selectionSort(size,data);
+                endTime = System.currentTimeMillis();
+                difference = endTime - beginTime;
             } else if (choice.equals("insertion")) {
+                beginTime = System.currentTimeMillis();
                 insertionSort(size,data);
+                endTime = System.currentTimeMillis();
+                difference = endTime - beginTime;
             } else if (choice.equals("merge")) {
-                // merge call
-            }
+                beginTime = System.currentTimeMillis();
+                sort(data,0,size-1);
+                endTime = System.currentTimeMillis();
+                difference = endTime - beginTime;
+            } 
             System.out.println("Max: " + data[size-1]);
             System.out.println("Min: " + data[0]);
+            System.out.println("Sorting time: " + difference + "ms");
 
         } else {
             String[] arr = new String[5];
-            long beginTime;
-            long endTime;
+            
+            
 
             int[] sizes = {10000,20000,40000,80000,160000};
 
@@ -42,20 +56,20 @@ public class SortDriver {
                     beginTime = System.currentTimeMillis();
                     selectionSort(sizes[i],createDataset(sizes[i]));
                     endTime = System.currentTimeMillis();
-                    long difference = endTime - beginTime;
-                    arr[i] = sizes[i] + ", " + difference;
+                    difference = endTime - beginTime;
+                    arr[i] = sizes[i] + "," + difference;
                 }
 
 
             } else if (choice.equals("insertion")) {
 
                 for (int i = 0; i < 5; i++) {
-
+                    
                     beginTime = System.currentTimeMillis();
                     insertionSort(sizes[i],createDataset(sizes[i]));
                     endTime = System.currentTimeMillis();
-                    long difference = endTime - beginTime;
-                    arr[i] = sizes[i] + ", " + difference;
+                    difference = endTime - beginTime;
+                    arr[i] = sizes[i] + "," + difference;
                 }
 
             } else if (choice.equals("merge")) {
@@ -64,10 +78,12 @@ public class SortDriver {
                     beginTime = System.currentTimeMillis();
                     sort(mergeArr,0,(sizes[i]-1));
                     endTime = System.currentTimeMillis();
-                    long difference = endTime - beginTime;
+                    difference = endTime - beginTime;
+                    arr[i] = sizes[i] + "," + difference;
                 }
             } else {
                 System.out.println("Invalid");
+                System.exit(0);
             }
 
             writeToFile(arr);
