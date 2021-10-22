@@ -39,8 +39,7 @@ public class SortDriver {
                 
             }  
             else { // when the input is not an integer
-                System.out.println("\nPlease enter a that is -1, or above 0:");
-              
+                System.out.println("\nPlease enter a that is -1, or above 0:");  
                 input.next();
                 continue;
             }
@@ -71,7 +70,7 @@ public class SortDriver {
         System.out.println("Min: " + data[0]);
         System.out.println("Sorting time: " + difference + "ms");
         
-      } else if(size == -1) {//If the size is -1 it will do the preset elements
+      } else if (size == -1) {//If the size is -1 it will do the preset elements
         String[] arr = new String[5];
         
         int[] sizes = {10000,20000,40000,80000,160000};
@@ -113,7 +112,6 @@ public class SortDriver {
         writeToFile(arr);
         System.out.println("results.csv file updated");
       }
-    }
     input.close();
   }
   
