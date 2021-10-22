@@ -5,12 +5,14 @@ import java.util.Random;
 
 public class SortDriver {
     public static void main (String[] args) {
+        //Setup
         long beginTime, endTime;
         long difference = 0;
         boolean choosing = true;
         String choice = "";
         Scanner input = new Scanner(System.in);
 
+        //Sorting selection + validation
         while(choosing){
             System.out.println("Selection, insertion or merge sort?");
             choice = input.nextLine();
