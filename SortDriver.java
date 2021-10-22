@@ -110,18 +110,21 @@ public class SortDriver {
   }
   
   public static void selectionSort(int size, int[] arr){
-    for (int i = 0; i < size; i++)  {
-      int index = i;
-      for (int j = i + 1; j < size; j++){
-        if (arr[j] < arr[index]){
-          index = j;//searching for lowest index
+        for (int i = 0; i < size; i++)  {
+            // min is the index of the smallest element with an index
+            // greater or equal to i
+            int min = i;
+            for (int j = i + 1; j < size; j++){
+                if (arr[j] < arr[min]){
+                    min = j; // if there is an element to the right of min that is smaller than it, update min to that
+                }
+            }
+            // swapping i-th and min-th elements
+            int swap = arr[i];
+            arr[i] = arr[min];
+            arr[min] = swap;
         }
-      }
-      int smallerNumber = arr[index];
-      arr[index] = arr[i];
-      arr[i] = smallerNumber;
     }
-  }
   
   public static void insertionSort(int size, int[] arr){
     int key;
