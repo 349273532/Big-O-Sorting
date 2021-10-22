@@ -74,7 +74,7 @@ public class SortDriver {
         String[] arr = new String[5];
         
         int[] sizes = {10000,20000,40000,80000,160000};
-        //choosign the method for the preset
+        //choosing the method for the preset
         if (choice.equals("selection")) {
           
           for (int i = 0; i < 5; i++) {
