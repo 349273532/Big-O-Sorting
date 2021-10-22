@@ -9,36 +9,35 @@ public class SortDriver {
     long beginTime, endTime;
     long difference = 0;
     boolean choosing = true;
+    boolean intChoosing = true;
     String choice = "";
     Scanner input = new Scanner(System.in);
-    boolean intChoosing = true;
     
-    //Choice validation plus choice
+    //Sorting choice validation plus choice
     while(choosing){
       System.out.println("Selection, insertion or merge sort?");
       choice = input.nextLine();
       choice = choice.toLowerCase();
       if(choice.equals("selection") || choice.equals("insertion")|| choice.equals("merge")){     
-        choosing = false;  
+        choosing = false; 
       } else {
-        System.out.println("Incorrect Word \n Please Choose again:");
+        System.out.println("Incorrect word, please choose again:");
       }
     }
     
-    // validate when invald sort choice
+    // check for valid sort choice
     while(intChoosing){
       System.out.println("How much do you want to sort? (-1 for all sizes)");
       int size = input.nextInt();
       if (size >= -1){
         intChoosing = false;
       } else {
-        System.out.println("Please Enter a Number -1, or Above 0");
+        System.out.println("Please Enter a Number -1, or Above 0"); // number less than -1
       }
       
       if (size > 0) {// If the size is custom
         int[] data = createDataset(size);
-        /*Takes the time before the method and after to find the time that it took
-         */
+        //Measures the time before the method started until it ends exceution and finds the difference
         if (choice.equals("selection")) { // The selection method
           beginTime = System.currentTimeMillis();
           selectionSort(size,data);
@@ -60,14 +59,13 @@ public class SortDriver {
         System.out.println("Sorting time: " + difference + "ms");
         
       } else if(size == -1) {//If the size is -1 it will do the preset elements
-        String[] arr = new String[5];
+        String[] arr = new String[5]; 
         
         int[] sizes = {10000,20000,40000,80000,160000};
-        //choosign the method for the preset
+        //choosing the method for the preset
         if (choice.equals("selection")) {
           
           for (int i = 0; i < 5; i++) {
-            
             beginTime = System.currentTimeMillis();
             selectionSort(sizes[i],createDataset(sizes[i]));
             endTime = System.currentTimeMillis();
@@ -79,7 +77,6 @@ public class SortDriver {
         } else if (choice.equals("insertion")) {
           
           for (int i = 0; i < 5; i++) {
-            
             beginTime = System.currentTimeMillis();
             insertionSort(sizes[i],createDataset(sizes[i]));
             endTime = System.currentTimeMillis();
@@ -89,7 +86,7 @@ public class SortDriver {
           
         } else if (choice.equals("merge")) {
           for (int i = 0; i < 5; i++) {
-            int mergeArr[] = createDataset(sizes[i]);
+            int mergeArr[] = createDataset(sizes[i]); //needs to be created ahead of time because mergesort is recursive, calling each time is costly
             beginTime = System.currentTimeMillis();
             sort(mergeArr,0,(sizes[i]-1));
             endTime = System.currentTimeMillis();
@@ -97,14 +94,18 @@ public class SortDriver {
             arr[i] = sizes[i] + "," + difference;
           }  
         }
-        //Printing out the array tot eh csv file
+        //Printing out the array to the csv file
         writeToFile(arr);
         System.out.println("results.csv file updated");
       }
     }
     input.close();
   }
-  
+  /**
+   * Sorts an array of size elements using selection sort.
+   * @param size size of array
+   * @param arr array containing unsorted elements
+   */
   public static void selectionSort(int size, int[] arr){
         for (int i = 0; i < size; i++)  {
             // min is the index of the smallest element with an index
