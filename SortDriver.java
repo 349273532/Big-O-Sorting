@@ -26,14 +26,26 @@ public class SortDriver {
     }
     
     // validate when invald sort choice
-    while(intChoosing){
-      System.out.println("How much do you want to sort? (-1 for all sizes)");
-      int size = input.nextInt();
-      if (size > -1){
-        intChoosing = false;
-      } else {
-        System.out.println("Please Enter a Number -1, or Above 0");
-      }
+     System.out.println("How much do you want to sort? (-1 for all sizes)");
+    int size = 0;
+    boolean invalid = true;
+        while (invalid) {
+            if (input.hasNextInt()) { 
+                size = input.nextInt(); // arrays start at 0, but humans start counting at 1 so compensate
+                if (size < -1) {
+                    System.out.println("\nPlease enter a number that is -1, or above 0:");
+                    continue;
+                } 
+                
+            }  
+            else { // when the input is not an integer
+                System.out.println("\nPlease enter a that is -1, or above 0:");
+              
+                input.next();
+                continue;
+            }
+            invalid = false; // when all of the conditions are false there will be no continue and we will reach here 
+        }
       
       if (size > 0) {// If the size is custom
         int[] data = createDataset(size);
