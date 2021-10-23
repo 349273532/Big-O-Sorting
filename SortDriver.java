@@ -43,8 +43,7 @@ public class SortDriver {
                     System.out.println("\nError: too small. Please enter a number that is -1 or above 0:");
                     continue;
                 }           
-            }  
-            else { // when the input is not an integer
+            }  else { // when the input is not an integer
                 System.out.println("\nError: invalid type or too large. Please enter a number that is -1 or above 0:");  
                 input.next();
                 continue;
@@ -103,7 +102,7 @@ public class SortDriver {
         } else if (choice.equals("merge")) {
 
           for (int i = 0; i < 5; i++) {
-            int mergeArr[] = createDataset(sizes[i]);
+            int mergeArr[] = createDataset(sizes[i]); //needs to be created ahead of time because mergesort is recursive, calling each time is costly
             beginTime = System.currentTimeMillis();
             sort(mergeArr,0,(sizes[i]-1));
             endTime = System.currentTimeMillis();
@@ -125,8 +124,7 @@ public class SortDriver {
    */
   public static void selectionSort(int size, int[] arr){
         for (int i = 0; i < size; i++)  {
-            // min is the index of the smallest element with an index
-            // greater or equal to i
+            // min is the index of the smallest element with an index equal to i (or greater, if condition below met)
             int min = i;
             for (int j = i + 1; j < size; j++){
                 if (arr[j] < arr[min]){
@@ -254,7 +252,6 @@ public class SortDriver {
     public static int[] createDataset(int size) {
     Random ran = new Random();
     int[] data = new int[size];
-    
     for (int i = 0; i < size; i++) {
       data[i] = ran.nextInt(Integer.MAX_VALUE);
     }
