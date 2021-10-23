@@ -1,3 +1,10 @@
+/**
+ * Sorting Lab
+ * Date - October 2, 2021
+ * Arjun, Victor, James
+ * Mr. Ho
+ */
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
@@ -9,36 +16,46 @@ public class SortDriver {
     long beginTime, endTime;
     long difference = 0;
     boolean choosing = true;
-    boolean intChoosing = true;
     String choice = "";
     Scanner input = new Scanner(System.in);
+   
     
-    //Sorting choice validation plus choice
+    //Choice validation plus choice
     while(choosing){
       System.out.println("Selection, insertion or merge sort?");
       choice = input.nextLine();
       choice = choice.toLowerCase();
       if(choice.equals("selection") || choice.equals("insertion")|| choice.equals("merge")){     
-        choosing = false; 
+        choosing = false;  
       } else {
         System.out.println("Incorrect word, please choose again:");
       }
     }
     
     // check for valid sort choice
-    while(intChoosing){
-      System.out.println("How much do you want to sort? (-1 for all sizes)");
-      int size = input.nextInt();
-      if (size >= -1){
-        intChoosing = false;
-      } else {
-        System.out.println("Please Enter a Number -1, or Above 0"); // number less than -1
-      }
+     System.out.println("How much do you want to sort? (-1 for all sizes)");
+    int size = 0;
+    boolean invalid = true;
+        while (invalid) {
+            if (input.hasNextInt()) { 
+                size = input.nextInt();
+                if (size < -1) {
+                    System.out.println("\nError: too small or too big. Please enter a number that is -1, or above 0:");
+                    continue;
+                } 
+                
+            }  
+            else { // when the input is not an integer
+                System.out.println("\nError: invalid type. Please enter a number that is -1 or above 0:");  
+                input.next();
+                continue;
+            }
+            invalid = false; // when all of the conditions are false there will be no continue and we will reach here 
+        }
       
       if (size > 0) {// If the size is custom
-        System.out.println("Data size: " + size);
         int[] data = createDataset(size);
-        //Measures the time before the method started until it ends exceution and finds the difference
+        ///Measures the time when the method started until it ends exceution and finds the difference
         if (choice.equals("selection")) { // The selection method
           beginTime = System.currentTimeMillis();
           selectionSort(size,data);
@@ -59,11 +76,11 @@ public class SortDriver {
         System.out.println("Min: " + data[0]);
         System.out.println("Sorting time: " + difference + "ms");
         
-      } else if(size == -1) {//If the size is -1 it will do the preset elements
-        String[] arr = new String[5]; 
+      } else if (size == -1) {//If the size is -1 it will do the preset elements
+        String[] arr = new String[5];
         
         int[] sizes = {10000,20000,40000,80000,160000};
-        //choosing the method for the preset
+         //choosing the method for the preset
         if (choice.equals("selection")) {
           
           for (int i = 0; i < 5; i++) {
@@ -74,10 +91,9 @@ public class SortDriver {
             arr[i] = sizes[i] + "," + difference;
           }
           
-          
         } else if (choice.equals("insertion")) {
           
-          for (int i = 0; i < 5; i++) {
+          for (int i = 0; i < 5; i++) { 
             beginTime = System.currentTimeMillis();
             insertionSort(sizes[i],createDataset(sizes[i]));
             endTime = System.currentTimeMillis();
@@ -86,23 +102,24 @@ public class SortDriver {
           }
           
         } else if (choice.equals("merge")) {
+
           for (int i = 0; i < 5; i++) {
-            int mergeArr[] = createDataset(sizes[i]); //needs to be created ahead of time because mergesort is recursive, calling each time is costly
+            int mergeArr[] = createDataset(sizes[i]);
             beginTime = System.currentTimeMillis();
             sort(mergeArr,0,(sizes[i]-1));
             endTime = System.currentTimeMillis();
             difference = endTime - beginTime;
             arr[i] = sizes[i] + "," + difference;
           }  
+
         }
         //Printing out the array to the csv file
         writeToFile(arr);
         System.out.println("results.csv file updated");
       }
-    }
     input.close();
-  }
-  /**
+  } 
+ /**
    * Sorts an array of size elements using selection sort.
    * @param size size of array
    * @param arr array containing unsorted elements
@@ -129,24 +146,24 @@ public class SortDriver {
      * @param size - size of the array to be sorted 
      * @param arr - array to be sorted
      */
-  public static void insertionSort(int size, int[] arr){
-    int key;
-    int j;
-    
-    //Loop through each element of the array
-    for (int i = 1; i < size; ++i) {
-      key = arr[i];
-      j = i - 1;
-      
-      // Re-arrange elements that are greater than the key to in front of the key's index
-      while (j >= 0 && arr[j] > key) {
-        arr[j + 1] = arr[j];
-        j = j - 1;
+    public static void insertionSort(int size, int[] arr){
+        int key;
+        int j;
+        
+        //Loop through each element of the array
+        for (int i = 1; i < size; ++i) {
+          key = arr[i];
+          j = i - 1;
+          
+          // Re-arrange elements that are greater than the key to in front of the key's index
+          while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+          }
+          // Inserts element in correct position of the sorted part of the array
+          arr[j + 1] = key;
+        }
       }
-      // Inserts element in correct position of the sorted part of the array
-      arr[j + 1] = key;
-    }
-  }
   
   // Merges two subarrays of arr[].
   // First subarray is arr[l..m]
@@ -194,14 +211,12 @@ public class SortDriver {
       }
       k++;
     }
-    
     /* Copy remaining elements of L[] if any */
     while (i < n1) {
       arr[k] = L[i];
       i++;
       k++;
-    }
-    
+    }    
     /* Copy remaining elements of R[] if any */
     while (j < n2) {
       arr[k] = R[j];
@@ -232,8 +247,12 @@ public class SortDriver {
       merge(arr, l, m, r);
     }
   }
-  //creates the data set randomly using the size of the array and randomly generating postive int
-  public static int[] createDataset(int size) {
+/**
+ * Creates an array of size specificed filled with random numbers from 0 to integer max value.
+ * @param size desired array size
+ * @return unsorted randomized array of size specified
+ */
+    public static int[] createDataset(int size) {
     Random ran = new Random();
     int[] data = new int[size];
     
