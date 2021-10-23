@@ -1,7 +1,7 @@
 /**
  * Sorting Lab
  * Date - October 2, 2021
- * Arjun, Victor, James
+ * Arjun, Victor, James S.
  * Mr. Ho
  */
 
@@ -20,7 +20,7 @@ public class SortDriver {
     Scanner input = new Scanner(System.in);
    
     
-    //Choice validation plus choice
+    //Sort choice and validation
     while(choosing){
       System.out.println("Selection, insertion or merge sort?");
       choice = input.nextLine();
@@ -32,7 +32,7 @@ public class SortDriver {
       }
     }
     
-    // check for valid sort choice
+    //Check for valid sort size selection
      System.out.println("How much do you want to sort? (-1 for all sizes)");
     int size = 0;
     boolean invalid = true;
@@ -40,13 +40,12 @@ public class SortDriver {
             if (input.hasNextInt()) { 
                 size = input.nextInt();
                 if (size < -1) {
-                    System.out.println("\nError: too small or too big. Please enter a number that is -1, or above 0:");
+                    System.out.println("\nError: too small. Please enter a number that is -1 or above 0:");
                     continue;
-                } 
-                
+                }           
             }  
             else { // when the input is not an integer
-                System.out.println("\nError: invalid type. Please enter a number that is -1 or above 0:");  
+                System.out.println("\nError: invalid type or too large. Please enter a number that is -1 or above 0:");  
                 input.next();
                 continue;
             }
@@ -57,30 +56,30 @@ public class SortDriver {
         int[] data = createDataset(size);
         ///Measures the time when the method started until it ends exceution and finds the difference
         if (choice.equals("selection")) { // The selection method
-          beginTime = System.currentTimeMillis();
-          selectionSort(size,data);
-          endTime = System.currentTimeMillis();
-          difference = endTime - beginTime;
+            beginTime = System.currentTimeMillis();
+            selectionSort(size,data);
+            endTime = System.currentTimeMillis();
+            difference = endTime - beginTime;
         } else if (choice.equals("insertion")) { // The insertion method
-          beginTime = System.currentTimeMillis();
-          insertionSort(size,data);
-          endTime = System.currentTimeMillis();
-          difference = endTime - beginTime;
+            beginTime = System.currentTimeMillis();
+            insertionSort(size,data);
+            endTime = System.currentTimeMillis();
+            difference = endTime - beginTime;
         } else if (choice.equals("merge")) { // The merge method
-          beginTime = System.currentTimeMillis();
-          sort(data,0,size-1);
-          endTime = System.currentTimeMillis();
-          difference = endTime - beginTime;
+            beginTime = System.currentTimeMillis();
+            sort(data,0,size-1);
+            endTime = System.currentTimeMillis();
+            difference = endTime - beginTime;
         } //Prints out the max, min, and the sorting time
         System.out.println("Max: " + data[size-1]);
         System.out.println("Min: " + data[0]);
         System.out.println("Sorting time: " + difference + "ms");
         
-      } else if (size == -1) {//If the size is -1 it will do the preset elements
+      } else if (size == -1) {//If the size is -1 it will do the preset sizes
         String[] arr = new String[5];
         
         int[] sizes = {10000,20000,40000,80000,160000};
-         //choosing the method for the preset
+         //Choosing the method for the preset: will loop through all sizes and push results to array
         if (choice.equals("selection")) {
           
           for (int i = 0; i < 5; i++) {
