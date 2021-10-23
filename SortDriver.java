@@ -39,7 +39,7 @@ public class SortDriver {
         while (invalid) {
             if (input.hasNextInt()) { 
                 size = input.nextInt();
-                if (size < -1) {
+                if (size < -1 || size == 0) {
                     System.out.println("\nError: too small. Please enter a number that is -1 or above 0:");
                     continue;
                 }           
